@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<title>刮刮乐效果</title>
+	<style type="text/css">
+		html,body,#mycanvas{
+			width: 100%;
+			height: 100%;
+			margin: 0;
+		}
+		#mycanvas{
+			background: url(img/1.jpg);
+			background-size: 100% 100%;
+			vertical-align: top;
+		}
+	</style>
+</head>
+<body>
+	<!-- <img src="img/1.jpg" width="100%" height="100%" /> -->
+	<canvas id="mycanvas"></canvas>
+	<script type="text/javascript">
+		 var canvas = document.getElementById('mycanvas');
+		 canvas.width = canvas.offsetWidth;
+		 canvas.height = canvas.offsetHeight;
+		 var ctx = canvas.getContext('2d');
+
+		 ctx.fillStyle = "darkgray";
+		 ctx.fillRect(0,0,canvas.width,canvas.height);
+
+		//阴影的设置,需要在绘制图形之前设置
+		ctx.shadowOffsetX = 5;
+		ctx.shadowOffsetY = 5;
+		ctx.shadowBlur = 8;//模糊度
+		ctx.shadowColor = "#666";
+
+		 ctx.font = "6em a";
+		 ctx.fillStyle = "#ccc";
+		 ctx.textAlign = "center";
+		 ctx.fillText("Hello",canvas.width/2,canvas.height/2);
+		 //PC端刮刮乐
+		// canvas.onmousedown = function(){
+		// 	canvas.onmousemove = function(event){
+		// 		var x = event.offsetX;
+		// 		var y = event.offsetY;
+
+		// 		ctx.globalCompositeOperation = "destination-out";
+		// 		ctx.fillStyle = "red";
+		// 		ctx.beginPath();
+		// 		ctx.arc(x,y,20,0,Math.PI*2);
+		// 		ctx.closePath();
+		// 		ctx.fill();
+
+		// 		console.log(ctx.getImageData(0,0,600,400).data);
+		// 	}
+		// }
+		// canvas.onmouseup = function(){
+		// 	canvas.onmousemove = null;
+		// }
+
+		 //移动端刮刮乐
+		 canvas.addEventListener('touchmove',function(event){
+		 		var x = event.touches[0].clientX;
+				var y = event.touches[0].clientY;
+				ctx.globalCompositeOperation = "destination-out";
+				ctx.fillStyle = "red";
+				ctx.beginPath();
+				ctx.arc(x,y,20,0,Math.PI*2);
+				ctx.closePath();
+				ctx.fill();
+				 if(event.preventDefault){
+                    event.preventDefault();
+                }
+                return false;
+		 })
+	</script>
+</body>
+</html>
